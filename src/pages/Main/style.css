@@ -1,0 +1,12 @@
+.shum-main-hero {
+    position: relative;
+    background-color: var(--main-black);
+    color: var(--main-white);
+    display: grid;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-template-columns: 2fr 7fr;
+
+    min-height: 655px;
+    height: 75vh;
+}

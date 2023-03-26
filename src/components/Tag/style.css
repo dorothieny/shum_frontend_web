@@ -1,0 +1,6 @@
+.shum-tag {
+    background: var(--tag-bg);
+    color: var(--main-black);
+    padding: 0 8px 4px;
+    border-radius: 2px;
+}

@@ -1,0 +1,11 @@
+.shum-main-header {
+    align-items: baseline;
+    background-color: var(--main-black);
+}
+
+.shum-main-header * {
+    color: var(--main-white)
+}
+.shum-main-navigation {
+
+}

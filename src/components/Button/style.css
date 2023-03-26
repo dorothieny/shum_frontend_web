@@ -1,0 +1,16 @@
+.shum-button {
+    border: none;
+    padding: 8px 16px;
+    width: 100%;
+}
+.primaryBtn {
+    background: var(--main-black);
+    color: var(--main-white);
+    border-radius: 10px;
+    min-height: 64px;
+}
+@media (max-width: 1300px) {
+    .primaryBtn  h2 {
+        display: none;
+    }
+}
