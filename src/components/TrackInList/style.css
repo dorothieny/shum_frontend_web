@@ -1,0 +1,10 @@
+.inside {
+    transition: all 0.3s ease-in-out;
+    background-size: cover;
+    position: absolute;
+    filter: brightness(70%);
+}
+.inside:hover {
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
+}

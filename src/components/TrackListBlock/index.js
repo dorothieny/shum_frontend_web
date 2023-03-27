@@ -1,14 +1,19 @@
 import TrackInList from "../TrackInList"
+import { useDispatch, useSelector } from "react-redux";
 
-const TrackListBlock = ({title = "Title", items=[], lightTheme = true}) => {
+
+const TrackListBlock = ({title = "Title", items=[], lightTheme = true,  icon = null}) => {
+    const dispatch = useDispatch();
+    const {isPlaying} = useSelector(state => state.mainReducer);
+
 return (
     <div className="grid-style"
     style={{backgroundColor: lightTheme ? "var(--main-white)" : "var(--main-black)", borderTopLeftRadius: 10, borderBottomLeftRadius: 10, paddingBottom: 40, paddingRight: 40}}
     >
         <h2 
-        className="h2-text-style" 
+        className="h2-text-style flex-row gap-8" 
         style={{ gridColumnStart: 1, gridColumnEnd: 3, color: lightTheme ? "var(--main-black)" : "var(--main-white)", padding: "4px 8px"}}>
-           {title}
+           {title} {icon && icon}
             </h2>
             <div></div>
         <div className="flex-column gap-16">
@@ -16,7 +21,13 @@ return (
                 items?.map((item, i) => {
                     return <TrackInList key={item.id+i} item={item} isLight={lightTheme} 
                     onTagClick={(id) => console.log("tag", id)}
-                    onClick={(id) => console.log(id)}/>
+                    onClick={(id) => dispatch({
+                        type: "SET_MAIN_REDUCER", 
+                        payload: {
+                            shumId: id,
+                            isPlaying: !isPlaying,
+                        }
+                    })}/>
                 })
             }
             

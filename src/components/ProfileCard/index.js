@@ -1,18 +1,20 @@
 import "./style.css";
 
 const ProfileCard = ({item}) => {
-    const imageUrl = item?.soundcard ? item?.soundcard?.image?.url : item?.image?.url;
+    const imageUrl = item?.avatar?.url ? item?.avatar?.url : null;
     return (
         <div className="flex-column gap-16">
             <div style={{
                 backgroundImage: `url("http://localhost:3000${imageUrl}")`, 
-                width: 342, 
-                height: 342, 
+                width: 334, 
+                height: 334, 
                 backgroundColor: "var(--main-white)", 
                 borderRadius: 2,
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
                 backgroundSize: "cover",
+                outlineOffset: 4,
+                outline: "3px solid var(--main-green)"
                 // border: isLight && !imageUrl ? "2px solid var(--main-green)" : "none"
                 }}></div>
                 <div 

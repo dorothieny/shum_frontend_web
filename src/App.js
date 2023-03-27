@@ -16,9 +16,12 @@ function App() {
     <Router>
       
       <Header/>
-      <div className="shum-main-container">
-        <div className='grid-style' style={{position: "fixed", bottom: 0, width: "100%"}}>
-          <Player file={"http://localhost:3000/uploads/soundcard/audiofile/8/newShumrecording-F0F40D01-3A4A-45F3-9959-3A22B7335F9A.m4a"}/>
+      <div className="shum-main-container" >
+        <div className='grid-style' style={{position: "fixed", bottom: 0, width: "100%", zIndex: 10, pointerEvents: "none"}}>
+          <Player />
+          
+          <div style={{ pointerEvents: "none"}}/>
+          
           </div>
          <Routes>
           <Route path="/" exact element={<MainScreen />}/>

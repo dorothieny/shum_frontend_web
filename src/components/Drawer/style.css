@@ -1,0 +1,27 @@
+.shum-drawer {
+    background-color: var(--main-white);
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    height: 100vh;
+    /* position: absolute; */
+    width: 544px;
+    /* top: 0;
+    left: 0; */
+    padding: 24px;
+    position: relative;
+    box-sizing: border-box;
+}
+.shum-drawer-bg {
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    z-index: 11;
+}
+.shum-label {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 90%;
+    white-space: nowrap;
+}

@@ -1,0 +1,13 @@
+.shum-input {
+    border: none;
+    border-bottom: 2px solid var(--main-gray);
+    width: 100%;
+    background: transparent;
+    padding: 4px 0 16px;
+
+}
+.shum-input:focus-within,  .shum-input:focus-visible, .shum-input:focus {
+    border: none;
+    outline: none;
+    border-bottom: 2px solid var(--main-green);
+}

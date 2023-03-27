@@ -4,7 +4,7 @@ import { applyMiddleware, createStore, combineReducers, compose} from 'redux';
 
 
 const rootReducer = combineReducers({
-    main: mainReducer
+    mainReducer: mainReducer
    });
 
 const enhancerList = [];

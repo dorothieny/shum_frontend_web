@@ -5,13 +5,19 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import TrackListBlock from "../../components/TrackListBlock";
 import ProfilesBlock from "../../components/ProfilesBlock";
+import RightTopArrow from "../../svg/A_Right_Top_Arrow";
+import Drawer from "../../components/Drawer";
+import { useDispatch, useSelector } from "react-redux";
+
 
 const MainScreen = () => {
     const [randomCard, setRandomCard] = useState({});
     const [newTracks, setNewTracks] = useState([]);
     const [followees, setFollowees] = useState([]);
     const [popularTracks, setPopularTracks] = useState([]);
-
+    const [users, setUsers] = useState([]);
+    const dispatch = useDispatch();
+    const {isShowDrawer} = useSelector((state) => state.mainReducer);
 
     useEffect(() => {
     axios.get("http://localhost:3000/api/v1/random/")
@@ -21,30 +27,36 @@ const MainScreen = () => {
     }, [])
 
     useEffect(() => {
-        axios.get("http://localhost:3000/api/v1/soundcards/")
+    axios.get("http://localhost:3000/api/v1/soundcards/")
+    .then((r) => {
+        setNewTracks(r.data);
+    })
+    }, [])
+
+    useEffect(() => {
+    axios.get("http://localhost:3000/api/v1/users/1/followed")
+    .then((r) => {
+        setFollowees(r.data);
+    })
+    }, [])
+
+    useEffect(() => {
+        axios.get("http://localhost:3000/api/v1/popular")
         .then((r) => {
-            setNewTracks(r.data);
+            setPopularTracks(r.data);
         })
-        }, [])
+    }, [])
 
-        useEffect(() => {
-            axios.get("http://localhost:3000/api/v1/users/1/followed")
-            .then((r) => {
-                setFollowees(r.data);
-            })
-            }, [])
-
-            useEffect(() => {
-                axios.get("http://localhost:3000/api/v1/popular")
-                .then((r) => {
-                    setPopularTracks(r.data);
-                })
-            }, [])
+    useEffect(() => {
+        axios.get("http://localhost:3000/api/v1/users")
+        .then((r) => {
+            setUsers(r.data);
+        });
+    }, []);
 
 
     return (
         <>
-        
         <div className="grid-style">
             <div></div>
             <div className="shum-main-hero">
@@ -63,23 +75,50 @@ const MainScreen = () => {
 
         <div className="grid-style">
             <div></div>
-            <TrackListBlock title={"Новое"} items={newTracks}/>
+            <TrackListBlock title={"Новое"} items={newTracks} icon={<RightTopArrow  size={40}/>}/>
         </div>
 
         <div style={{height: 48}}/>
 
         <div className="grid-style">
             <div></div>
-            <ProfilesBlock title={"Подписки"} items={followees}/>
+            <ProfilesBlock title={"Подписки"} items={followees} icon={<RightTopArrow  size={40}/>}/>
         </div>
 
         <div style={{height: 48}}/>
 
         <div className="grid-style">
             <div></div>
-            <TrackListBlock title={"Популярное"} items={popularTracks}/>
+            <TrackListBlock title={"Популярное"} items={popularTracks} icon={<RightTopArrow  size={40}/>}/>
         </div>
 
+        <div style={{height: 48}}/>
+
+        <div className="grid-style">
+            <div></div>
+            <ProfilesBlock title={"Сообщество"} items={users} icon={<RightTopArrow  size={40}/>}/>
+        </div>
+
+        <div style={{height: 128}}/>
+
+        <div className="grid-style">
+            <div></div>
+        <div className="flex-row" style={{justifyContent: "space-between", paddingRight: 40}}> 
+        <p className="p-text-style" style={{color: "var(--main-black)"}}>о нас</p>
+        <p className="p-text-style" style={{color: "var(--main-black)"}}>политика конфиденциальности</p>
+        <p className="p-text-style" style={{color: "var(--main-black)"}}>2023</p>
+        </div>
+        </div>
+
+        <div style={{height: 24}}/>
+        <Drawer title={"Загрузка нового шума"} isOpen={isShowDrawer} onClose={() => {
+            dispatch({
+                type: "SET_MAIN_REDUCER",
+                payload: {
+                    isShowDrawer: false
+                }
+            })
+            }}/>
         </>
     )
 

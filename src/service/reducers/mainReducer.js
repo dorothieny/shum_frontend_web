@@ -4,6 +4,7 @@ const initialState = {
     userEmail: "",
     isPlaying: false,
     shumId: null,
+    isShowDrawer: false,
 };
 
 export const mainReducer = (state = initialState, action) => {

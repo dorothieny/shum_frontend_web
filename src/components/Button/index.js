@@ -1,6 +1,6 @@
 import "./style.css"
 
-const Button = ({title="", onClick=() => null, type="primary", icon=null}) => {
+const Button = ({title="", onClick=() => null, type="primary", icon=null, isDisabled, ...restProps}) => {
 const getType = () => {
     switch (type) {
         case "primary": {
@@ -18,16 +18,16 @@ const getType = () => {
     }
 }
     return (
-        <div>
-            <button className={` h2-text-style flex-row gap-4 shum-button ${getType()}`}
-            style={{justifyContent: "center"}} 
+            <button 
+
+            className={`h2-text-style flex-row gap-4 shum-button ${getType()}`}
+            style={{...restProps?.style, opacity: isDisabled? 0.5 : 1}} 
             onClick={onClick}>
                [ <h2 className="h2-text-style">
                      {title} 
                 </h2> 
                 {icon && icon}]
                 </button>
-        </div>
     )
 }
 export default Button;
