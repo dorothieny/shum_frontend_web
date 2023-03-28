@@ -18,27 +18,23 @@ const DrawerAuth = ({onClose = () => null, title="Загрузка", isOpen=fals
     // mypassword
 
    const signIn = async() => {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({user: { email: email, password: password }})
-    };
-    await fetch('http://localhost:3000/api/v1/users/sign_in', requestOptions)
-    .then(response => console.log(response.headers))
-    // await axios({
-    //     method: 'post',
-    //     url: "http://localhost:3000/api/v1/users/sign_in",
-    //     data: {user: { email: email, password: password }},
-    //     headers: {
-    //         'Access-Control-Allow-Origin': '*',
-    //         'Access-Control-Allow-Headers': '*',
-    //         'Access-Control-Allow-Credentials': 'true'
-    //       }
-    //   })
-    // .then((r) => {
-    //     console.log(r.config.headers.authorization)
-    //  localStorage.setItem("id_token", r.headers.authorization);
-    // });
+    // const requestOptions = {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({user: { email: email, password: password }})
+    // };
+    // await fetch('http://localhost:3000/api/v1/users/sign_in', requestOptions)
+    // .then(response => console.log(response.headers))
+    await axios({
+        method: 'post',
+        url: "http://localhost:3000/api/v1/users/sign_in",
+        data: {user: { email: email, password: password }}, 
+      
+      })
+    .then((r) => {
+        console.log(r)
+     localStorage.setItem("id_token", r.headers.authorization);
+    });
    }
 
    const signUp = () => {
