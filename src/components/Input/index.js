@@ -13,9 +13,11 @@ const Input =({
     isError = false,
     disabled = false,
     type = "input",
+    isPassword = false,
     icon = null,
     openDropDown = false,
     multipleValue = [],
+    id="",
     description = "",
 }) => {
 
@@ -38,6 +40,8 @@ const Input =({
         case "input": {
             return (
                 <input 
+                id={id}
+                type={isPassword ? "password" : "text"}
                 className="shum-input h3-text-style"
                     value={locValue}
                     placeholder={placeholder}
@@ -51,6 +55,7 @@ const Input =({
          case "select": {
             return (
                 <div className="flex-row shum-input" 
+                id={id}
                 style={{justifyContent: "space-between", borderBottom: openDropDown ? "2px solid var(--main-green)" : "2px solid var(--main-gray)"}}>
                 
                 <div 
@@ -79,7 +84,7 @@ const Input =({
          }
          default : {
             return (
-            <input type={type} placeholder={placeholder} value={locValue}/>
+            <input id={id} type={type} placeholder={placeholder} value={locValue}/>
             )
          }
         }

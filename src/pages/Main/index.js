@@ -6,7 +6,7 @@ import axios from "axios";
 import TrackListBlock from "../../components/TrackListBlock";
 import ProfilesBlock from "../../components/ProfilesBlock";
 import RightTopArrow from "../../svg/A_Right_Top_Arrow";
-import Drawer from "../../components/Drawer";
+import Drawer from "../../components/DrawerUploader";
 import { useDispatch, useSelector } from "react-redux";
 
 
@@ -111,14 +111,18 @@ const MainScreen = () => {
         </div>
 
         <div style={{height: 24}}/>
-        <Drawer title={"Загрузка нового шума"} isOpen={isShowDrawer} onClose={() => {
-            dispatch({
-                type: "SET_MAIN_REDUCER",
-                payload: {
-                    isShowDrawer: false
-                }
-            })
-            }}/>
+        <Drawer 
+            title={"Загрузка нового шума"} 
+            isOpen={isShowDrawer} 
+            onClose={() => {
+                dispatch({
+                    type: "SET_MAIN_REDUCER",
+                    payload: {
+                        isShowDrawer: false
+                    }
+                })
+            }}
+            />
         </>
     )
 

@@ -5,21 +5,20 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import MainScreen from './pages/Main';
 import Header from './components/Header';
 import Player from './components/Player';
-
+import Auth from './pages/Auth';
 
 const store = initStore();
 
 function App() {
   return (
+    
     <Provider store={store}>
-      
     <Router>
       
       <Header/>
       <div className="shum-main-container" >
         <div className='grid-style' style={{position: "fixed", bottom: 0, width: "100%", zIndex: 10, pointerEvents: "none"}}>
           <Player />
-          
           <div style={{ pointerEvents: "none"}}/>
           
           </div>
@@ -28,6 +27,7 @@ function App() {
           <Route path="/new" />
           <Route path="/popular" />
           <Route path="/profile" exact element={<MainScreen />}/>
+          <Route path="/auth" exact element={<Auth />}/>
           <Route path="/search" exact element={<MainScreen />}/>
          </Routes>  
           </div>     

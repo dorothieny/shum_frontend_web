@@ -120,7 +120,7 @@ if (!isOpen) return <></>
                     axios
                     .post("http://localhost:3000/api/v1/soundcards", formData, {
                       headers: {
-                        // Authorization: `${token}`,
+                        Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwic2NwIjoidXNlciIsImF1ZCI6bnVsbCwiaWF0IjoxNjc5OTY2ODAxLCJleHAiOjE2ODEyNjI4MDEsImp0aSI6ImVhOWIxYzI5LTJhZWEtNDY4Ny1hYjViLTlkOTc0OWYwN2U4YiJ9.8E2l0g0yA1Fi77qFUmb_p3zFKush3v0QFeICfVtjNJE",
                         "Content-Type": "multipart/form-data",
                       },
                     })

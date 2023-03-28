@@ -10,8 +10,9 @@
     border-radius: 10px;
     min-height: 64px;
 }
-@media (max-width: 1300px) {
+
+/* @media (max-width: 1300px) {
     .primaryBtn  h2 {
         display: none;
     }
-}
+} */
