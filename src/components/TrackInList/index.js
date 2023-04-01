@@ -3,17 +3,44 @@ import "./style.css";
 import LikeIcon from "../../svg/A_Like_Icon";
 import DownloadIcon from "../../svg/A_Download_Icon";
 import MoreIcon from "../../svg/A_More_Icon";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import PlayIcon from "../../svg/A_Play_Icon";
 import { useSelector } from "react-redux";
 import PauseIcon from "../../svg/A_Pause_Icon";
+import FilledLikeIcon from "../../svg/A_Filled_Like_Icon";
+import axios from "axios";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const TrackInList = ({item, isLight=true, onTagClick=() => null, onClick=() => null}) => {
     const imageUrl = item?.soundcard ? item?.soundcard?.image?.url : item?.image?.url;
     const location = item?.soundcard?.location || item?.location;
     const name = item?.soundcard?.name || item?.name;
     const [visible, setVisible] = useState(false);
-    const {shumId, isPlaying} = useSelector(state => state.mainReducer);
+    const {shumId, isPlaying, userId} = useSelector(state => state.mainReducer);
+    const [liked, setLiked] = useState(false);
+    const {getItem} = useLocalStorage();
+    
+    const likeSmth = (e) => {
+    e.preventDefault();
+    axios.post(`http://localhost:3000/api/v1/soundcards/${item.id}/likes`, {like: {}},
+    { headers: {
+        Authorization: `${getItem("token")}`,
+        "Content-Type": "application/json",
+    }})
+    }
+
+    const unlikeSmth = (e) => {
+        e.preventDefault();
+        axios.delete(`http://localhost:3000/api/v1/soundcards/${item.id}/likes/${item?.likes?.filter((item) => item?.user_id === userId)?.[0]?.id}`, 
+        { headers: {
+            "Authorization": `${getItem("token")}`
+        }})
+        }
+
+    useEffect(() => {
+    const s = Boolean(item?.likes?.filter((item) => item?.user_id === userId).length);
+    setLiked(s);
+    }, [item]);
 
     return (
         <div className="flex-row gap-16" 
@@ -84,7 +111,13 @@ const TrackInList = ({item, isLight=true, onTagClick=() => null, onClick=() => n
                       {visible && (
                         <>
                             <DownloadIcon color={isLight ? "var(--main-black)" : "var(--main-white)"}/>
-                            <LikeIcon color={isLight ? "var(--main-black)" : "var(--main-white)"}/>
+                            {liked ? 
+                            <FilledLikeIcon 
+                             onClick={(e) => unlikeSmth(e)}
+                            color={isLight ? "var(--main-black)" : "var(--main-white)"}/> : 
+                            <LikeIcon 
+                            onClick={(e) => likeSmth(e)}
+                            color={isLight ? "var(--main-black)" : "var(--main-white)"}/>}
                             <MoreIcon color={isLight ? "var(--main-black)" : "var(--main-white)"}/>
                         </>
                         )}

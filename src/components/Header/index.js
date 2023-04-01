@@ -3,16 +3,18 @@ import "./style.css";
 import Logo from "./components/Logo";
 import React, {useEffect, useState} from "react";
 import { useLocation } from 'react-router-dom';
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const Header = () => {
 const [token, setToken] = useState(null);
+const {getItem} = useLocalStorage();
 
   const location = useLocation();
 
   console.log(location.pathname);
 
     useEffect(() => {
-       const token = localStorage.getItem('token');
+       const token = getItem('token');
         console.log(token);
         setToken(token);
     }, [])

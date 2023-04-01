@@ -7,9 +7,6 @@ import axios from "axios";
 const Auth = () => {
 
     const dispatch = useDispatch();
- 
-    
-    
     return (
         <>
         <div>

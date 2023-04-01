@@ -1,4 +1,6 @@
 import PlusIcon from "../../svg/A_Plus_Icon";
+import './style.css';
+
 export const DropDownItem = ({
     isActive = false,
     isMultiple = false,

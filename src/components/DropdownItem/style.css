@@ -1,0 +1,7 @@
+.dropdown-menu-item:hover {
+    background-color: var(--main-gray);
+}
+.dropdown-menu-item {
+    padding: 4px;
+    cursor: pointer;
+}

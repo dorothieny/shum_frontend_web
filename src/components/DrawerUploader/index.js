@@ -6,8 +6,38 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Button from "../Button";
 import UploadIcon from "../../svg/A_Upload_Icon";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
+export function getExtension(filename) {
+  var parts = filename.split('.');
+  return parts[parts.length - 1];
+}
+ 
+export function isImage(filename = "none") {
+  var ext = getExtension(filename);
+  switch (ext.toLowerCase()) {
+    case 'jpg':
+    case 'gif':
+    case 'jpeg':
+    case 'png':
+      return true;
+  default: {
+      return false;
+  }
+  }
+}
 
+export function isSound(filename = "none") {
+  var ext = getExtension(filename);
+  switch (ext.toLowerCase()) {
+    case 'm4a':{
+       return true;
+    }
+    default: {
+      return false;
+  }
+  } 
+}
 const Drawer = ({onClose = () => null, title="Загрузка", isOpen=false}) => {
     const [tags, setTags] = useState([]);
     const [fileName, setFileName] = useState("");
@@ -18,7 +48,7 @@ const Drawer = ({onClose = () => null, title="Загрузка", isOpen=false}) 
     const [shumSelectedLocation, setShumSelectedLocation] = useState("");
     const [shumSelectedFile, setShumSelectedFile] = useState("");
     const [shumSelectedSound, setShumSelectedSound] = useState("");
-
+  const {getItem} = useLocalStorage();
 
     // const debouncedSearchTerm = useDebounce(shumSelectedName, 500);
 
@@ -29,36 +59,8 @@ const Drawer = ({onClose = () => null, title="Загрузка", isOpen=false}) 
         })
     }, [])
 
-    function getExtension(filename) {
-        var parts = filename.split('.');
-        return parts[parts.length - 1];
-      }
-      
-      function isImage(filename = "none") {
-        var ext = getExtension(filename);
-        switch (ext.toLowerCase()) {
-          case 'jpg':
-          case 'gif':
-          case 'jpeg':
-          case 'png':
-            return true;
-        default: {
-            return false;
-        }
-        }
-      }
-
-      function isSound(filename = "none") {
-        var ext = getExtension(filename);
-        switch (ext.toLowerCase()) {
-          case 'm4a':{
-             return true;
-          }
-          default: {
-            return false;
-        }
-        } 
-      }
+ 
+     
 
 if (!isOpen) return <></>
 
@@ -87,7 +89,10 @@ if (!isOpen) return <></>
 
                        <input 
                        style={{width:0, position: "absolute"}}  
-                       type="file" id={"upload-photo"} onChange={(e) => {
+                       type="file" id={"upload-photo"} 
+                       accept=".jpeg,.jpg,.png" 
+                       onChange={(e) => {
+                        console.log(e.target.files)
                             setFileName(e.target.files[0].name)
                             setShumSelectedFile(e.target.files[0])
                        }}/>
@@ -99,7 +104,9 @@ if (!isOpen) return <></>
                             className={"h3-text-style shum-label"} htmlFor="upload-shum">{shumName || "Ваш звук"}</label>
                        <input 
                        style={{width:0, position: "absolute"}}  
-                       type="file" id={"upload-shum"} onChange={(e) => {
+                       type="file" id={"upload-shum"} 
+                       accept=".m4a"
+                       onChange={(e) => {
                             setShumName(e.target.files[0].name)
                             setShumSelectedSound(e.target.files[0])
                        }}/>
@@ -113,21 +120,25 @@ if (!isOpen) return <></>
                             name: shumSelectedName,
                             location: shumSelectedLocation,
                             image: shumSelectedFile,
+                            tags: tagSelected,
                             audiofile: shumSelectedSound
                         }
                         
                     }
-                    axios
-                    .post("http://localhost:3000/api/v1/soundcards", formData, {
-                      headers: {
-                        Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwic2NwIjoidXNlciIsImF1ZCI6bnVsbCwiaWF0IjoxNjc5OTY2ODAxLCJleHAiOjE2ODEyNjI4MDEsImp0aSI6ImVhOWIxYzI5LTJhZWEtNDY4Ny1hYjViLTlkOTc0OWYwN2U4YiJ9.8E2l0g0yA1Fi77qFUmb_p3zFKush3v0QFeICfVtjNJE",
-                        "Content-Type": "multipart/form-data",
-                      },
-                    })
-                    .then((r) => {
-                      console.log(r);
-                    })
+                    if(formData.soundcard.image) {
+                      axios
+                      .post("http://localhost:3000/api/v1/soundcards", formData, {
+                        headers: {
+                          Authorization: `${getItem("token")}`,
+                          "Content-Type": "multipart/form-data",
+                        },
+                      })
+                      .then((r) => {
+                        console.log(r);
+                      })
+                    }
                 }}
+
                 isDisabled={!tagSelected || !shumSelectedName || !shumSelectedLocation || !shumSelectedFile || !shumSelectedSound}
                 title="Опубликовать" 
                 style={{position: "absolute", 

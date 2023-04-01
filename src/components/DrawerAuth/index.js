@@ -3,28 +3,52 @@ import axios from "axios";
 import Button from "../Button";
 import CloseIcon from "../../svg/A_Close_Icon";
 import Input from "../Input";
-import "./style.css"
+import "./style.css";
+import { useDispatch } from "react-redux";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { useNavigate } from "react-router-dom";
+
+export const getUser =(token, userId = false, dispatch) => {
+    if(token && !userId) {
+     axios
+    .get("http://localhost:3000/api/v1/user/", {
+      headers: {
+        Authorization: `${token}`,
+      },
+    })
+    .then((r) => {
+      dispatch({
+        type: "SET_MAIN_REDUCER",
+        payload: { userId: r.data.id, username: r.data.name },
+      });
+    })   
+    } else {
+        if (userId) {
+            return "already logged in";
+        } else{
+            return "unauthorized"
+        }
+    }
+    
+}
 
 const DrawerAuth = ({onClose = () => null, title="Загрузка", isOpen=false, icon = true}) => {
     
     const [registration, setRegistration] = useState(false)
-
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
    const [userName, setUserName] = useState("");
    const [repeatPassword, setRepeatPassword] = useState("");
+   const {setItem} = useLocalStorage();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
    // daria@email.com
     // mypassword
 
+
+
    const signIn = async() => {
-    // const requestOptions = {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({user: { email: email, password: password }})
-    // };
-    // await fetch('http://localhost:3000/api/v1/users/sign_in', requestOptions)
-    // .then(response => console.log(response.headers))
     await axios({
         method: 'post',
         url: "http://localhost:3000/api/v1/users/sign_in",
@@ -33,8 +57,13 @@ const DrawerAuth = ({onClose = () => null, title="Загрузка", isOpen=fals
       })
     .then((r) => {
         console.log(r)
-     localStorage.setItem("id_token", r.headers.authorization);
-    });
+        setItem("token", r.headers.authorization);
+        getUser(r.headers.authorization, dispatch);
+    })
+    .then(() => {
+        navigate("/");
+    })
+    ;
    }
 
    const signUp = () => {
@@ -63,6 +92,7 @@ const DrawerAuth = ({onClose = () => null, title="Загрузка", isOpen=fals
        const a = document.getElementById("email")?.value
        const b = document.getElementById("password")?.value
        const c = document.getElementById("repeat-password")?.value
+        const d = document.getElementById("user-name")?.value
 
        if(a){
         document.getElementById("email").value = ""
@@ -72,6 +102,10 @@ const DrawerAuth = ({onClose = () => null, title="Загрузка", isOpen=fals
        }
        if(c){
         document.getElementById("repeat-password").value = ""
+       }
+
+       if (d) {
+        document.getElementById("user-name").value = ""
        }
 
         setEmail("");
@@ -108,6 +142,12 @@ if (!isOpen) return <></>
                     width={"100%"} 
                     placeholder="E-mail" 
                     onChange={(e) => setEmail(e.target.value)}/>
+                    
+                    {registration && 
+                    <Input id={"user-name"}
+                        width={"100%"} 
+                        placeholder="Никнейм" 
+                        onChange={(e) => setUserName(e.target.value)}/>}
 
                     <Input 
                     id={"password"}

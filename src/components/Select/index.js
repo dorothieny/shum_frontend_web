@@ -100,6 +100,7 @@ const Select = ({
                 setSelectedItem([...array]);
               }
             }}
+            onSelect = {(item) => checkItem(item)}
             openDropDown={selectOpen.current}
           />
         </div>

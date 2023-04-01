@@ -34,7 +34,7 @@ const MainScreen = () => {
     }, [])
 
     useEffect(() => {
-    axios.get("http://localhost:3000/api/v1/users/1/followed")
+    axios.get("http://localhost:3000/api/v1/users/2/feed")
     .then((r) => {
         setFollowees(r.data);
     })
@@ -75,28 +75,34 @@ const MainScreen = () => {
 
         <div className="grid-style">
             <div></div>
-            <TrackListBlock title={"Новое"} items={newTracks} icon={<RightTopArrow  size={40}/>}/>
+            <TrackListBlock 
+              linkTo={"/news"}
+            title={"Новое"} items={newTracks} icon={<RightTopArrow  size={40}/>}/>
         </div>
 
         <div style={{height: 48}}/>
 
         <div className="grid-style">
             <div></div>
-            <ProfilesBlock title={"Подписки"} items={followees} icon={<RightTopArrow  size={40}/>}/>
+            <ProfilesBlock title={"Подписки"} items={followees} showOutline={true} icon={<RightTopArrow  size={40}/>}/>
         </div>
 
         <div style={{height: 48}}/>
 
         <div className="grid-style">
             <div></div>
-            <TrackListBlock title={"Популярное"} items={popularTracks} icon={<RightTopArrow  size={40}/>}/>
+            <TrackListBlock 
+             linkTo={"/popular"}
+            title={"Популярное"} items={popularTracks} icon={<RightTopArrow  size={40}/>}/>
         </div>
 
         <div style={{height: 48}}/>
 
         <div className="grid-style">
             <div></div>
-            <ProfilesBlock title={"Сообщество"} items={users} icon={<RightTopArrow  size={40}/>}/>
+            <ProfilesBlock 
+            linkTo={"/community"}
+            title={"Сообщество"} items={users} icon={<RightTopArrow  size={40}/>}/>
         </div>
 
         <div style={{height: 128}}/>
@@ -111,7 +117,7 @@ const MainScreen = () => {
         </div>
 
         <div style={{height: 24}}/>
-        <Drawer 
+        {/* <Drawer 
             title={"Загрузка нового шума"} 
             isOpen={isShowDrawer} 
             onClose={() => {
@@ -122,7 +128,7 @@ const MainScreen = () => {
                     }
                 })
             }}
-            />
+            /> */}
         </>
     )
 

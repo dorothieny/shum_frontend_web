@@ -20,13 +20,13 @@ const getType = () => {
     return (
             <button 
 
-            className={`h2-text-style flex-row gap-4 shum-button ${getType()}`}
+            className={`h2-text-style flex-row gap-8 shum-button ${getType()}`}
             style={{...restProps?.style, opacity: isDisabled? 0.5 : 1}} 
             onClick={onClick}>
-               [ <h2 className="h2-text-style">
+                <h2 className="h2-text-style">
                      {title} 
                 </h2> 
-                {icon && icon}]
+                {icon && icon}
                 </button>
     )
 }

@@ -22,6 +22,8 @@
 
   --text-p-size: 18px;
   --text-p-weight: 400; 
+
+  --secondary-green: #D7E3DE;
 }
 
 .h1-text-style {
@@ -29,6 +31,7 @@
   font-weight: var(--text-h1-weight);
   text-transform: uppercase;
   letter-spacing: -0.04em;
+  line-height: 64px;
 }
 
 .h2-text-style {

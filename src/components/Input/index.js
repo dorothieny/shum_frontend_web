@@ -15,6 +15,7 @@ const Input =({
     type = "input",
     isPassword = false,
     icon = null,
+    onSelect = () => null,
     openDropDown = false,
     multipleValue = [],
     id="",
@@ -23,7 +24,7 @@ const Input =({
 
     const [locValue, setLocValue] = useState(value);
     const [multiTags, setMultiTags] = useState(multipleValue)
-
+  const [values, setValues] = useState(null);
     useEffect(() => {
         setLocValue(value);
     }, [value]);
@@ -33,6 +34,23 @@ const Input =({
     }, [multipleValue.length])
 
     
+    useEffect(() => {
+      const delayDebounceFn = setTimeout(() => {
+        if(document.getElementById("my_item")) {
+          document.getElementById("my_item").innerHTML = "";
+        }
+        
+        if (values) {
+        // setMultiTags([...multiTags, ...values])
+        onSelect(values[0]);
+        // console.log(values[0])
+        }
+      }, 1000)
+  
+      return () => clearTimeout(delayDebounceFn)
+    }, [values])
+  
+
     const styled = {width: width || "100%"}
 
     const getInput = () => {
@@ -60,8 +78,9 @@ const Input =({
                 
                 <div 
                 className={`flex-row gap-8 ${isError && "input-error"} ${disabled && "input-disabled"}`}
-                
+                style={{alignItems: "baseline"}}
                 >
+                 
                   {Boolean(multiTags.length) ? multiTags.map((item) => {
                       return (
                         <Tag
@@ -76,7 +95,16 @@ const Input =({
                     })
                     : <h3 className="h3-text-style">{placeholder}</h3>
                   }
-                  
+                   <span contentEditable="true" 
+                   id="my_item"
+                    onInput={(e) => 
+
+                    setValues((e.currentTarget?.innerHTML?.split(" ").map((item) => {
+                      return {tagname: item.split("&nbsp;")[0], id: Math.random(0, 12435356)}
+                      })))
+
+                      }>
+                   </span>
                 </div>
                 {openDropDown ? <ChevronDownIcon style={{}} color="var(--main-black)"/> : <ChevronUpIcon color="var(--main-black)"/>}
               </div>
