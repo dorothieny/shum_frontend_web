@@ -19,7 +19,7 @@ export const getUser =(token, userId = false, dispatch) => {
     .then((r) => {
       dispatch({
         type: "SET_MAIN_REDUCER",
-        payload: { userId: r.data.id, username: r.data.name },
+        payload: { userId: r.data.user.id, username: r.data.user.name },
       });
     })   
     } else {

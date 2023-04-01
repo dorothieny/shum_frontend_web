@@ -9,7 +9,7 @@ import RightTopArrow from "../../svg/A_Right_Top_Arrow";
 import Drawer from "../../components/DrawerUploader";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
-
+import { getUser } from "../../components/DrawerAuth";
 
 const MainScreen = () => {
     const [randomCard, setRandomCard] = useState({});
@@ -22,9 +22,9 @@ const MainScreen = () => {
     const {getItem} = useLocalStorage();
     const [authorized, setAuthorized] = useState(false);
 
-    useEffect(() => {
-       
+    useEffect(() => { 
         setAuthorized(getItem("token"))
+        getUser(getItem("token"), dispatch);
     }, [])
 
     useEffect(() => {
