@@ -7,13 +7,14 @@ import axios from 'axios';
 import PlayIcon from '../../svg/A_Play_Icon';
 import PauseIcon from '../../svg/A_Pause_Icon';
 import "./style.css";
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 const Player = () => {
   const {shumId, isPlaying} = useSelector(state => state.mainReducer);
   const [shum, setShum] = useState(null);
   const imageUrl = shum?.soundcard?.image?.url || null;
   const [file, setFile] = useState(null);
-
+const {getItem} = useLocalStorage();
   const dispatch = useDispatch();
 
     useEffect(() => {
@@ -124,12 +125,18 @@ const Player = () => {
                 icon={<PlusIcon size={40}/>}
                 title={"Загрузить"} 
                 onClick={() =>  {
-                    dispatch({
-                    type: "SET_MAIN_REDUCER",
-                    payload: {
-                        isShowDrawer: true
+                    if(getItem("token")) {
+                      dispatch({
+                        type: "SET_MAIN_REDUCER",
+                        payload: {
+                            isShowDrawer: true
+                        }
+                })
+                    } else {
+                        window.location.href = "/auth";
                     }
-                })}}/>
+                  
+                }}/>
         </div>
     )
 

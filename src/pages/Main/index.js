@@ -8,6 +8,7 @@ import ProfilesBlock from "../../components/ProfilesBlock";
 import RightTopArrow from "../../svg/A_Right_Top_Arrow";
 import Drawer from "../../components/DrawerUploader";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 
 const MainScreen = () => {
@@ -18,6 +19,13 @@ const MainScreen = () => {
     const [users, setUsers] = useState([]);
     const dispatch = useDispatch();
     const {isShowDrawer} = useSelector((state) => state.mainReducer);
+    const {getItem} = useLocalStorage();
+    const [authorized, setAuthorized] = useState(false);
+
+    useEffect(() => {
+       
+        setAuthorized(getItem("token"))
+    }, [])
 
     useEffect(() => {
     axios.get("http://localhost:3000/api/v1/random/")
@@ -76,7 +84,7 @@ const MainScreen = () => {
         <div className="grid-style">
             <div></div>
             <TrackListBlock 
-              linkTo={"/news"}
+              linkTo={"/newest"}
             title={"Новое"} items={newTracks} icon={<RightTopArrow  size={40}/>}/>
         </div>
 
@@ -84,7 +92,9 @@ const MainScreen = () => {
 
         <div className="grid-style">
             <div></div>
-            <ProfilesBlock title={"Подписки"} items={followees} showOutline={true} icon={<RightTopArrow  size={40}/>}/>
+            { authorized ? <ProfilesBlock title={"Подписки"} items={followees} showOutline={true} icon={<RightTopArrow  size={40}/>}/> :  <ProfilesBlock 
+            linkTo={"/community"}
+            title={"Сообщество"} items={users} icon={<RightTopArrow  size={40}/>}/>}
         </div>
 
         <div style={{height: 48}}/>
@@ -100,9 +110,9 @@ const MainScreen = () => {
 
         <div className="grid-style">
             <div></div>
-            <ProfilesBlock 
+            {authorized && <ProfilesBlock 
             linkTo={"/community"}
-            title={"Сообщество"} items={users} icon={<RightTopArrow  size={40}/>}/>
+            title={"Сообщество"} items={users} icon={<RightTopArrow  size={40}/>}/>}
         </div>
 
         <div style={{height: 128}}/>

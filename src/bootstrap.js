@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import ProfileScreen from './pages/Profile';
 import CommunityScreen from './pages/Community';
 import Drawer from './components/DrawerUploader';
+import NewPopScreen from './pages/NewPop';
 
 const AppContent = () => {
     const dispatch = useDispatch();
@@ -32,10 +33,10 @@ const AppContent = () => {
             </div>
            <Routes>
             <Route path="/" exact element={<MainScreen />}/>
-            <Route path="/new" />
-            <Route path="/popular" />
             <Route path="/profile" exact element={<ProfileScreen />}/>
+            <Route path="/newest" exact element={<NewPopScreen />}/>
             <Route path="/auth" exact element={<Auth />}/>
+            <Route path="/popular" exact element={<NewPopScreen />}/>
             <Route path="/search" exact element={<MainScreen />}/>
             <Route path="/community" exact element={<CommunityScreen />}/>
            </Routes>  

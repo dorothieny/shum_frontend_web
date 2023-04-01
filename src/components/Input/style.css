@@ -11,3 +11,16 @@
     outline: none;
     border-bottom: 2px solid var(--main-green);
 }
+.dark-mode:focus-within, .dark-mode:focus-visible, 
+.dark-mode:focus   {
+
+    border: none;
+   outline: none;
+}
+.dark-mode {
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--main-white) !important;
+    padding: 4px !important;
+    border-radius: 2px;
+}

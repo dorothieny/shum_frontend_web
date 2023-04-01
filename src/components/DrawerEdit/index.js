@@ -63,11 +63,12 @@ const DrawerEdit = ({onClose = () => null, title="Редактирование �
                        }}/>
 
                        </div>
-                    <Input width={"100%"} 
+                    <Input 
+                        width={"100%"} 
                         value={profile?.name}
                         placeholder="Никнейм" onChange={(e) => setSelectedUserName(e.target.value)}/>
                     </div>
-   <Button 
+                <Button 
                 onClick={() => { 
                     
                 }}

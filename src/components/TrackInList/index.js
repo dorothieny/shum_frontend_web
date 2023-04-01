@@ -116,7 +116,13 @@ const TrackInList = ({item, isLight=true, onTagClick=() => null, onClick=() => n
                              onClick={(e) => unlikeSmth(e)}
                             color={isLight ? "var(--main-black)" : "var(--main-white)"}/> : 
                             <LikeIcon 
-                            onClick={(e) => likeSmth(e)}
+                            onClick={(e) => {
+                                if(getItem("token")) {
+                                likeSmth(e)
+                                } else {
+                                    window.location.href = "/auth";
+                                }
+                            }}
                             color={isLight ? "var(--main-black)" : "var(--main-white)"}/>}
                             <MoreIcon color={isLight ? "var(--main-black)" : "var(--main-white)"}/>
                         </>

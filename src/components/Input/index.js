@@ -7,6 +7,7 @@ import ChevronUpIcon from "../../svg/A_Chevron_Up";
 const Input =({
     placeholder = "Введите значение",
     value = "",
+    showLabel = true,
     onChange = () => null,
     width = "auto",
     minWidth= "150px",
@@ -20,7 +21,9 @@ const Input =({
     multipleValue = [],
     id="",
     description = "",
+    isLight = true,
 }) => {
+
 
     const [locValue, setLocValue] = useState(value);
     const [multiTags, setMultiTags] = useState(multipleValue)
@@ -60,7 +63,7 @@ const Input =({
                 <input 
                 id={id}
                 type={isPassword ? "password" : "text"}
-                className="shum-input h3-text-style"
+                className={`shum-input h3-text-style ${isLight? "" : "dark-mode"}`}
                     value={locValue}
                     placeholder={placeholder}
                     onChange={(e) => {
@@ -72,7 +75,7 @@ const Input =({
         }
          case "select": {
             return (
-                <div className="flex-row shum-input" 
+                <div className={`flex-row shum-input ${isLight? "" : "dark-mode"}` }
                 id={id}
                 style={{justifyContent: "space-between", borderBottom: openDropDown ? "2px solid var(--main-green)" : "2px solid var(--main-gray)"}}>
                 
@@ -119,7 +122,7 @@ const Input =({
     }
     return (
         <div style={styled}>
-            <label className={"p-text-style"} style={{height: 24, display: "block"}}> {locValue ? placeholder: " "}</label>
+            {showLabel && <label className={"p-text-style"} style={{height: 24, display: "block"}}> {locValue ? placeholder: " "}</label>}
             {getInput(type)}
         {isError &&
         <label className={"idp-design-warning-label"}>
