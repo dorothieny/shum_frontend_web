@@ -15,14 +15,16 @@ const TrackInList = ({item, isLight=true, onTagClick=() => null, onClick=() => n
     const imageUrl = item?.soundcard ? item?.soundcard?.image?.url : item?.image?.url;
     const location = item?.soundcard?.location || item?.location;
     const name = item?.soundcard?.name || item?.name;
+    const id = item?.soundcard?.id || item?.id;
     const [visible, setVisible] = useState(false);
     const {shumId, isPlaying, userId} = useSelector(state => state.mainReducer);
     const [liked, setLiked] = useState(false);
     const {getItem} = useLocalStorage();
     
     const likeSmth = (e) => {
+        console.log()
     e.preventDefault();
-    axios.post(`http://localhost:3000/api/v1/soundcards/${item.id}/likes`, {like: {}},
+    axios.post(`http://localhost:3000/api/v1/soundcards/${id}/likes`, {like: {}},
     { headers: {
         Authorization: `${getItem("token")}`,
         "Content-Type": "application/json",
@@ -31,7 +33,7 @@ const TrackInList = ({item, isLight=true, onTagClick=() => null, onClick=() => n
 
     const unlikeSmth = (e) => {
         e.preventDefault();
-        axios.delete(`http://localhost:3000/api/v1/soundcards/${item.id}/likes/${item?.likes?.filter((item) => item?.user_id === userId)?.[0]?.id}`, 
+        axios.delete(`http://localhost:3000/api/v1/soundcards/${id}/likes/${item?.likes?.filter((item) => item?.user_id === userId)?.[0]?.id}`, 
         { headers: {
             "Authorization": `${getItem("token")}`
         }})

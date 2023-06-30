@@ -14,6 +14,7 @@ const Input =({
     isError = false,
     disabled = false,
     type = "input",
+    onKeyDown = () => null,
     isPassword = false,
     icon = null,
     onSelect = () => null,
@@ -66,6 +67,7 @@ const Input =({
                 className={`shum-input h3-text-style ${isLight? "" : "dark-mode"}`}
                     value={locValue}
                     placeholder={placeholder}
+                    onKeyDown={onKeyDown}
                     onChange={(e) => {
                         setLocValue(e.target.value);
                         onChange(e)
@@ -115,7 +117,7 @@ const Input =({
          }
          default : {
             return (
-            <input id={id} type={type} placeholder={placeholder} value={locValue}/>
+            <input id={id} type={type} placeholder={placeholder} value={locValue} onKeyDown={onKeyDown}/>
             )
          }
         }

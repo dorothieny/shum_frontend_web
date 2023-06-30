@@ -5,6 +5,7 @@ const initialState = {
     isPlaying: false,
     shumId: null,
     isShowDrawer: false,
+    search: "",
 };
 
 export const mainReducer = (state = initialState, action) => {

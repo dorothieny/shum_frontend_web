@@ -12,6 +12,7 @@ import ProfileScreen from './pages/Profile';
 import CommunityScreen from './pages/Community';
 import Drawer from './components/DrawerUploader';
 import NewPopScreen from './pages/NewPop';
+import SearchScreen from './pages/Search';
 
 const AppContent = () => {
     const dispatch = useDispatch();
@@ -37,7 +38,7 @@ const AppContent = () => {
             <Route path="/newest" exact element={<NewPopScreen />}/>
             <Route path="/auth" exact element={<Auth />}/>
             <Route path="/popular" exact element={<NewPopScreen />}/>
-            <Route path="/search" exact element={<MainScreen />}/>
+            <Route path="/search" exact element={<SearchScreen />}/>
             <Route path="/community" exact element={<CommunityScreen />}/>
            </Routes>  
            <Drawer 

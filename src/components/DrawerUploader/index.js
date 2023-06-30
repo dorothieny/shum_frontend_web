@@ -79,7 +79,7 @@ if (!isOpen) return <></>
                     <Input width={"100%"} placeholder="Место" onChange={(e) => setShumSelectedLocation(e.target.value)}/>
 
                     <Select isMultiple={true} listItems={tags}
-                        placeholder="Тэги" 
+                        placeholder="Теги" 
                         onSelect={(e) => setTagSelected(e.map(item => item.name).join(", "))}/>
                             
                        <div className="flex-row gap-16" style={{height: 48}}> 
